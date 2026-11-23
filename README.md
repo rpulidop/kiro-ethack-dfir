@@ -17,7 +17,8 @@ pendientes del Spec.
 |---|---|
 | `.kiro/specs/ethical-hacking-forensics-agent/` | **El Spec**: `requirements.md`, `design.md`, `tasks.md`. Es el objeto de trabajo colaborativo. |
 | `.kiro/hooks/`, `.kiro/settings/`, `.kiro/steering/` | Hooks de gobernanza/auditoría, config MCP (sin secretos) y steering. |
-| `agent_ethack_dfir/agents/` | Agente_Orquestador + 5 subagentes de fase + 5 subagentes de rol (custom agents de Kiro). |
+| `agent_ethack_dfir/agents/` | Agente_Orquestador + 5 subagentes de fase + 5 subagentes de rol (SOP en markdown). |
+| `.kiro/agents/` | **Custom agents de Kiro ya registrados** (`ethack-*.json`), generados desde los SOP con `agent_ethack_dfir/scripts/gen_kiro_agents.py`. Ver `agent_ethack_dfir/README-kiro-setup.md`. |
 | `agent_ethack_dfir/scripts/` | Guardia de allowlist, catalogador, adaptador de Powers, validación local. |
 | `agent_ethack_dfir/engagements/dvwa-lab-ulsa/` | Engagement de referencia: `scope.yaml`, `state.json`, `inventory.json`, evidencia, incidentes, GRC. |
 | `agent_ethack_dfir/engagements/dvwa-lab-ulsa/_ejemplo-resuelto/` | **Ejemplo resuelto por el docente**: un ciclo completo contra DVWA con evidencia, incidente y artefactos GRC reales. Material de estudio. |
@@ -35,6 +36,28 @@ pendientes del Spec.
 - `make`
 - Para la **pasada real** contra el laboratorio: acceso al lab AWS (Kali + DVWA).
   Las credenciales del lab se entregan **por canal privado**, nunca en este repo.
+
+## Configurar los agentes en Kiro
+
+Los agentes (orquestador + 5 fases + 5 roles) vienen **registrados** como custom agents en
+`.kiro/agents/ethack-*.json`.
+
+> **Abre la RAÍZ del repo clonado como workspace de Kiro.** Los `resources` de los agentes usan
+> rutas relativas al workspace (`file://agent_ethack_dfir/...`); si abres una subcarpeta, no
+> resolverán.
+
+```bash
+git clone https://github.com/gusdelact/kiro-ethack-dfir.git
+cd kiro-ethack-dfir      # <-- abre ESTA carpeta como workspace en Kiro
+```
+
+1. Abre la carpeta raíz del repo como workspace en Kiro (IDE) o sitúate en ella (CLI).
+2. Los agentes aparecen en el selector de Kiro: `ethack-orquestador`, `ethack-scanning`, …
+3. Si mueves el framework o editas un SOP, regenera los configs:
+   `python3 agent_ethack_dfir/scripts/gen_kiro_agents.py` (detecta el layout automáticamente).
+
+Guía completa (esquema del JSON, Powers por agente, modelo de operación, seguridad):
+**`agent_ethack_dfir/README-kiro-setup.md`**.
 
 ## Arranque rápido
 

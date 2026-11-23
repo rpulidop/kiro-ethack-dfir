@@ -16,6 +16,7 @@ engagement: dvwa-lab-ulsa
 powers:
   - dfir-linux
   - network-forensics
+  - docker-forensics
 forensics_flow:
   - Detect
   - Isolate
